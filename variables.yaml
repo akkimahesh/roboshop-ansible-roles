@@ -1,0 +1,10 @@
+MONGODB_HOST: mongodb.maheshakki.shop
+REDIS_HOST: redis.maheshakki.shop
+CATALOGUE_HOST: catalogue.maheshakki.shop
+PAYMENT_HOST: payment.maheshakki.shop
+USER_HOST: user.maheshakki.shop
+MYSQL_HOST: mysql.maheshakki.shop
+RABBITMQ_HOST: rabbitmq.maheshakki.shop
+SHIPPING_HOST: shipping.maheshakki.shop
+CART_HOST: cart.maheshakki.shop
+DISPATCH_HOST: dispatch.maheshakki.shop

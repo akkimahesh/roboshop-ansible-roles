@@ -1,6 +1,6 @@
   - name: Copy mongodb repo
     ansible.builtin.copy:
-      src: mongodb.repo
+      src: mongodb.repo.j2
       dest: /etc/yum.repos.d/mongodb.repo
 
   - name: Install mongodb client
@@ -9,12 +9,12 @@
       state: present
 
   - name: get the entries count for catalogue
-    ansible.builtin.shell:  "mongo --host mongodb.daws76s.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'"
+    ansible.builtin.shell:  "mongo --host {{MONGODB_HOST}} --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'"
     register: products_count
     when: component == "catalogue"
 
   - name: get the entries count for user
-    ansible.builtin.shell:  "mongo --host mongodb.daws76s.online --quiet --eval 'db = db.getSiblingDB("user"); db.products.count()'"
+    ansible.builtin.shell:  "mongo --host {{MONGODB_HOST}} --quiet --eval 'db = db.getSiblingDB("user"); db.products.count()'"
     register: users_count
     when: component == "user"
 
@@ -24,11 +24,11 @@
   #  when: "{{component}} == catalogue"
 
   - name: load catalogue data
-    ansible.builtin.shell: mongo --host mongodb.daws76s.online < /app/schema/{{component}}.js
+    ansible.builtin.shell: mongo --host {{MONGODB_HOST}} < /app/schema/{{component}}.js
     when: products_count.stdout == "0" and component == "catalogue"
     ignore_errors: yes
 
   - name: load user data
-    ansible.builtin.shell: mongo --host mongodb.daws76s.online < /app/schema/{{component}}.js
+    ansible.builtin.shell: mongo --host {{MONGODB_HOST}} < /app/schema/{{component}}.js
     when: users_count.stdout == "0" and component == "user"
     ignore_errors: yes
