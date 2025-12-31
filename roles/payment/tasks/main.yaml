@@ -1,0 +1,14 @@
+- name: "download {{component}} application"
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app-setup
+
+- name: "python setup for {{component}}"
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: python
+
+- name: "start {{component}} service"
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: systemd
